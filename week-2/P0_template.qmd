@@ -48,9 +48,9 @@ __Include the tables created from [PY4DS: CH2 Data Visualization](https://aeturr
 
 
 ```{python}
-# Include and execute your code here
 
-
+penguins = load_penguins()
+penguins
 
 ```
 
@@ -59,6 +59,7 @@ _include figures in chunks and discuss your findings in the figure._
 ```{python}
 # Include and execute your code here
 
+penguins.head()
 
 ```
 
@@ -71,34 +72,78 @@ __Recreate the example charts from [PY4DS: CH2 Data Visualization](https://aetur
 ```{python}
 # Include and execute your code here
 
+(
+    ggplot(data=penguins, mapping=aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point()
+)
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+This is a scatter plot that visualizes the relationship between a study sample of penguins' flipper length in millimeters and body mass. Generally we see that as the flipper length increases so does the body mass.
 
 ```{python}
 # Include and execute your code here
 
+(
+    ggplot(
+        data=penguins,
+        mapping=aes(x="flipper_length_mm", y="body_mass_g", color="species"),
+    )
+    + geom_point()
+)
 
 ```
+
+In this scatter plot we have specified the individual species included in the study with the legend on the right, and separated the species by color. We see that the Gentoo penguins are generally the largest with the highest body mass and longest flippers. 
 
 
 ```{python}
 # Include and execute your code here
 
+(
+    ggplot(
+        data=penguins,
+        mapping=aes(x="flipper_length_mm", y="body_mass_g", color="species"),
+    )
+    + geom_point()
+    + geom_smooth(method="lm")
+)
 
 ```
+
+In this plot we have added a line of best fit that maps the progression of values using a linear model. The species each have their own line of best fit, with the species legend indicating which line corresponds to which species. 
+
+```{python}
+# Include and execute your code here
+
+(
+    ggplot(data=penguins, mapping=aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point(mapping=aes(color="species"))
+    + geom_smooth(method="lm")
+)
+
+```
+
+In this chart we have combined the three lines of best fit into one linear regression that corresponds to the progression of values of all three species together. 
 
 
 ```{python}
 # Include and execute your code here
 
+(
+    ggplot(data=penguins, mapping=aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point(aes(color="species", shape="species"))
+    + geom_smooth(method="lm")
+    + labs(
+        title="Body mass and flipper length",
+        subtitle="Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+        x="Flipper length (mm)",
+        y="Body mass (g)",
+        color="Species",
+        shape="Species",
+    )
+)
 
 ```
 
-
-```{python}
-# Include and execute your code here
-
-
-```
+In this final chart we have separated the points corresponding to each species by shape, included the line of best fit from the previous chart. We've cleaned up the axis titles, species legend, and added the title for the overall visualization of the data. 
