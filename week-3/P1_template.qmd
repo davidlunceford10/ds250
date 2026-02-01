@@ -50,13 +50,43 @@ df = pd.read_csv("https://github.com/byuidatascience/data4names/raw/master/data-
 
 __How does your name at your birth year compare to its use historically?__
 
-_type your results and analysis here_
+The name David peaked at 64,755 overall uses in the U.S. in 1955. This is 46,172 more uses than my birth year, 1999, which came in at 18583 total uses.
 
 ```{python}
 # Include and execute your code here
+import textwrap
+
+my_name_1999 = df[(df['name'] == 'David') & (df['year'] == 1999)]
+
+david_over_time = df[df['name'] == 'David']
+
+david_arrow_label = textwrap.fill("18583 uses of 'David' in 1999", 20)
+
+david_max = david_over_time[david_over_time['Total'] == david_over_time['Total'].max()]
 
 
-
+dave_history = (ggplot(david_over_time, aes(x='year', y='Total'))
+ + geom_point()
+ + geom_point(data=my_name_1999, color='red', size=3)
+ + geom_point(data=david_max, color='red', size=3)
+ + xlim(1910, 2020)
+ + ylim(0, 70000) 
+ + labs(
+     title="Popularity of the Name David Over Time in the U.S.",
+     subtitle="(My birth year highlighted in red)",
+     x='Year',
+     y='Total Births'    
+ )
+ + geom_segment(
+            x=2010, xend=1999,
+            y=40000, yend=18584,
+            arrow=arrow(type="closed"),
+            color='red',
+            size=1)
+ + geom_label(x=1993, y=40000, label=david_arrow_label, hjust='left', color='red')
+ + geom_label(x=1955, y=70000, label="64,755 uses of 'David' in 1955", color='red')
+)
+dave_history
 
 ```
 
@@ -65,11 +95,26 @@ _type your results and analysis here_
 
 __If you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?__
 
-_type your results and analysis here_
+The name Brittany spiked between the late 1980s and early 1990s so I would guess that his or her age would most likely span between her late 20s to her mid 30s. Anyone over 50 or under 15 years of age would not be likely to have that name so them I would not include in my guesswork. 
 
 ```{python}
 # Include and execute your code here
+brittany_over_time = df[df['name'] == 'Brittany']
 
+brittany_age_over_time = brittany_over_time[['year', 'Total']].copy()
+
+brittany_age_over_time['Age'] = 2026 - brittany_age_over_time['year']
+
+brittany_age_over_time
+
+(ggplot(brittany_age_over_time, aes(x='year', y='Total')) +
+ geom_line() +
+ scale_x_continuous(format='d') +
+ labs(title='Popularity of the Name Brittany Over Time',
+      x='Year',
+      y='Number of Brittanys Born') +
+ theme_minimal() +
+ theme(axis_line=element_line(size=1.5, color='black')))
 
 ```
 
@@ -78,11 +123,40 @@ _type your results and analysis here_
 
 __Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?__
 
-_type your results and analysis here_
+Mary peaked in both the 1920s and the 1950s, while Martha, Peter, and Paul peaked between 1940 and 1965. After their individual peaks, all four names declined in usage through 2000.
 
 ```{python}
 # Include and execute your code here
 
+mary = df[(df['name'] == 'Mary') & (df['year'] >= 1920) & (df['year'] <= 2000)]
+martha = df[(df['name'] == 'Martha') & (df['year'] >= 1920) & (df['year'] <= 2000)]
+peter = df[(df['name'] == 'Peter') & (df['year'] >= 1920) & (df['year'] <= 2000)]
+paul = df[(df['name'] == 'Paul') & (df['year'] >= 1920) & (df['year'] <= 2000)]
+
+mary_plot = mary.copy()
+martha_plot = martha.copy()
+peter_plot = peter.copy()
+paul_plot = paul.copy()
+
+mary_plot['Name'] = 'Mary'
+martha_plot['Name'] = 'Martha'
+peter_plot['Name'] = 'Peter'
+paul_plot['Name'] = 'Paul'
+
+combined_df = pd.concat([mary_plot, martha_plot, peter_plot, paul_plot])
+
+(ggplot(combined_df, aes(x='year', y='Total', color='Name')) +
+    geom_line(size=1) +
+    geom_point(size=2) +
+    geom_vline(xintercept=1940, color='red', linetype='solid', size=1) +  
+    geom_vline(xintercept=1965, color='red', linetype='solid', size=1) +  
+    geom_rect(xmin=1940, xmax=1965, ymin=0, ymax=55000, 
+              fill='red', alpha=0.1, inherit_aes=False) + 
+    labs(title='Name Usage Comparison: Mary, Martha, Peter, and Paul (1920-2000)',
+         x='Year',
+         y='Total Usage') +
+    theme_minimal() +
+    scale_x_continuous(format='d'))
 ```
 
 
@@ -95,6 +169,30 @@ _type your results and analysis here_
 
 ```{python}
 # Include and execute your code here
+bob_over_time = df[df['name'] == 'Bob']
+
+incredibles_release_date = bob_over_time[df['year'] == 2004]
+
+bob_label = textwrap.fill("6 uses of the name Bob the year of the Incredibles' release, 2004",25)
+
+(
+    ggplot(bob_over_time, aes(x='year', y='Total'))
+    + geom_line()
+    + scale_x_continuous(format='d') 
+    + xlim(1910, 2020)
+    + geom_point(data=incredibles_release_date, color='red', size=3)
+    + geom_segment(x=1992, xend=2004, 
+                  y=950, yend=6,
+                  arrow=arrow(type='closed'),
+                  color='red',
+                  size=1)
+    + geom_label(x=1990, y=971, label=bob_label, color='red')
+    + labs (
+        title=textwrap.fill("Popularity of Bob over time compared to the use of Bob (As in Bob Parr) at the time The Incredibles was released",50),
+        x='Year',
+        y='Number of Bobs Born'
+    )
+)
 
 
 ```

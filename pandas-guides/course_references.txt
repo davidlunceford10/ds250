@@ -1,0 +1,30 @@
+What kind of data does pandas handle?
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html
+
+How do I read and write tabular data?
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html
+
+How do I select a subset of a DataFrame?
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/03_subset_data.html
+
+Filtering rows with query
+https://aeturrell.github.io/python4DS/data-transform.html#filtering-rows-with-query
+
+Labels, titles, and other contextual information
+https://aeturrell.github.io/python4DS/communicate-plots.html#labels-titles-and-other-contextual-information
+
+Visualisation
+https://aeturrell.github.io/python4DS/visualise.html
+
+Layers
+https://aeturrell.github.io/python4DS/vis-layers.html
+
+Reading data from a file
+https://aeturrell.github.io/python4DS/data-import.html
+
+Data Visualization with Lets Plot
+https://byuistats.github.io/DS250-Course/Course%20Materials/lets_plot.html
+
+Graphics for Communication
+https://aeturrell.github.io/python4DS/communicate-plots.html
+
